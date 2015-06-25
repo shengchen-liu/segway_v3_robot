@@ -5,10 +5,21 @@ Onboard PC ROS packages for the Segway RMP V3 provided by Stanley Innovation. Th
 
 **For all you brave DIYers that decided they didn't need Stanley Innovation's expertise, and went with the barebones V3 system......ENJOY!!!**
 
+**If you haven't decided go through this and the segway_v3_desktop setup before you decide......How valuable is your time??? I bet the development your working on is much more valuable than spending a bunch of time mucking around with setup......GO WITH A NAVIGATOR PACKAGE!!! That's the pitch, we'll leave the decision up to you**
+
 # We provide fully integrated systems with support
 **We provide standard navigation packages and fully integrated solutions with all robot setup, networking, timing, sensor integration, sensor calibration, tailored navigation tuning, and extended functionality. Our integrated packages come with fully setup onboard PC, sensor integration/calibration, and a VM for remote monitoring and control. This tutorial is for seasoned ROS integrators that can complete that work themselves with our base RMP V3 platforms. Please contact Stanley Innovation for pricing and information on fully integrated packages and base platforms http://stanleyinnovation.com/contact-us/. Stanley Innovation is the only supplier of V3 compatible hardware, so please do not expect any of this to work if you did not purchase the system or an upgrade from Stanley Innovation, Inc.**
 
 **If you want one-on-one engineering support for a system with PC, sensors, and nav...please buy one from us or contact us for an engineering support quote. Otherwise if you plan to buy your own sensors and your own computer for integration it is assumed you know what you're doing. Please use the community for support in integrating your own hardware, we will only address RMP specific questions for these customers if contacted directly. For example if you buy a barebones RMP V3 mobility platform and you need to know how to pull a faultlog, let us know; if you are trying to setup your PC and all your sensors, please rely on the community. We may help as part of the community for non-platform related questions, but there is no gaurantee**
+
+  
+## Mechanical and Electrical Integration of Sensors, Manipulators and other peripherals
+* Before starting software setup make sure you have all your sensors mounted and electrically integrated
+* You will need their location relative to the SEGWAY_PARENT_LINK defined in the configuration (see below in Robot Customization)
+* Sensors need to be configured to work with the configurations we use by default or you need to modify them.
+* For questions about electrical integration into the RMP power system see the manual and ask us if you have questions
+* For mechanical 3D models please visit our website http://stanleyinnovation.com/resources/ at the bottom of the page
+* Please use the community for software support unless you purchased a fully integrated system in which case you likely wouldn't need this tutorial
 
 ## Installation
 Until we have released our packages in the ROS distro please follow these instructions for installing from source. The following instructions are valid for Ubuntu 14.04LTS and ROS Indigo. Before proceding please install Ubuntu 14.04LTS.
@@ -36,6 +47,7 @@ Until we have released our packages in the ROS distro please follow these instru
   * Keyboard (and mouse probably)
   * Internet Connection
   * Power supply for PC
+
 
 ### Install ROS Indigo
 From a linux machine connected to the internet run the following commands
@@ -118,7 +130,9 @@ From a linux machine connected to the internet run the following commands
   git clone https://github.com/StanleyInnovation/segway_v3.git
   git clone https://github.com/StanleyInnovation/segway_v3_desktop.git
   ```
-5. **Edit the setup configuration**
+  
+### Robot Customization
+1. **Edit the setup configuration**
   * To setup your robot configuration edit the 50.segway_config.sh file
   ```
   gedit ~/segway_ws/src/segway_robot/segway_bringup/env-hooks/50.segway_config.sh
@@ -139,7 +153,7 @@ From a linux machine connected to the internet run the following commands
     * **WARNING!! Do not run navigation in balance mode unless you have read the manual and fully understand the caveats of balance mode**
   * The rest of the variables are fairly straight forward
 
-6. **Compile from source**
+2. **Compile from source**
   * **Once you compile from source your configuration file that gets sourced is located in ~/segway_ws/devel/etc/catkin/profile.d/50.segway_config.sh**
   ```
   cd ~/segway_ws
@@ -151,7 +165,12 @@ From a linux machine connected to the internet run the following commands
 **Don't you wish you just sprung for the fully integrated system????**
 
 ### Setup Network
-You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
+You need to set the network up for our platforms and the various ethernet enabled sensors.
+This is an outline but **we also provide fully integrated packages**.
+
+**NOTE: The ROBOT_NETWORK environment variable must match the port you use for #1 below.**
+**You can pull the network off with 1 NIC with some modifications.** 
+**We suggest having 2 NICS and following this configuration**
 
 1. **Set the IP of eth1 to the robot and sensor network**
   * The default IP of the network interface that talks to the platform is **10.66.171.4**
@@ -205,11 +224,6 @@ You need to set the network up for our platforms and the various ethernet enable
   * There is information on how to do this out there we will not cover it here
   * **Fully integrated machines delivered by Stanley come with this all setup**
   
-### Mechanical and Electrical integration of sensors
-* Sensors need to be configured to work with the configurations we use by default or you need to modify them.
-* Please use the community for support unless you purchased a fully integrated system in which case you likely wouldn't need this tutorial
-
-
 ### Additional steps
 You should probably do the regardless, but these steps are really only required PGR Flea3 camera and onboard PC powered from RMP.
 
