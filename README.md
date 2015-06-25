@@ -30,7 +30,7 @@ Onboard PC ROS packages for the Segway RMP V3 provided by Stanley Innovation. Th
 * We provide a subset of the available peripherals we support in the open software
 * We can integrate pretty much anything in a custom integration system and support that
 * Please use the community for software support unless you purchased a fully integrated system 
-  * If you did purchase a system no need to read further unless your just interested. We did all this a quite a bit more setting up your system already.
+  * **If you did purchase a Navigator package or a custom robot; no need to read further unless your just interested. We did all this a quite a bit more setting up your system already.**
 
 ## Installation
 Until we have released our packages in the ROS distro please follow these instructions for installing from source. The following instructions are valid for Ubuntu 14.04LTS and ROS Indigo. Before proceding please install Ubuntu 14.04LTS.
