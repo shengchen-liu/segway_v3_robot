@@ -160,9 +160,9 @@ From a linux machine connected to the internet run the following commands
   catkin_make
   ```
 
-**Assuming you followed the instructions up to this point you should have successfully compiled, a little more setup and your on your way**
+# Assuming you followed the instructions up to this point you should have successfully compiled, a little more setup and your on your way**
 
-**Don't you wish you just sprung for the fully integrated system????**
+# Don't you wish you sprung for that fully integrated system???
 
 ### Setup Network
 You need to set the network up for our platforms and the various ethernet enabled sensors.
@@ -319,8 +319,14 @@ You should probably do the regardless, but these steps are really only required 
     * The status LED should blink yellow indicating the state
   * If the PC is powered by the RMP, everything should start up when the platform is powered on
     * You should hear 2 beeps when the configuration server is initialized and 2 more when the platform is ready to accept commands
-    * The launch is time staged so it takes ~15 seconds to complete  
+    * The launch is time staged so it takes ~15 seconds to complete
   * If the PC has its own power source power it on after the embedded system comes up
+
+If you want to stop the service and restart it, open a terminal:
+```
+segstop
+segstart
+```
 
 # Congratulation!!! If you got here the robot is all setup!!! Now you just need to configure a remote PC for visualization and control.....
 # Don't you wish you sprung for that fully integrated system???
