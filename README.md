@@ -1,11 +1,37 @@
 # segway_v3_robot
 Onboard PC ROS packages for the Segway RMP V3 provided by Stanley Innovation. This document roughly outlines the various steps required to setup an RMP V3 platform that has not been provided by Stanley Innovation.
 
-# We provide fully integrated systems
-**We provide standard navigation packages and fully integrated solutions with all robot setup, networking, timing, sensor integration, sensor calibration, tailored navigation tuning, and extended functionality. This tutorial is for seasoned ROS integrators that can complete that work themselves with our base RMP V3 platforms. Please contact Stanley Innovation for pricing and information http://stanleyinnovation.com/contact-us/**
+# We provide fully integrated systems with support
+**We provide standard navigation packages and fully integrated solutions with all robot setup, networking, timing, sensor integration, sensor calibration, tailored navigation tuning, and extended functionality. Our integrated packages come with fully setup onboard PC, sensor integration/calibration, and a VM for remote monitoring and control. This tutorial is for seasoned ROS integrators that can complete that work themselves with our base RMP V3 platforms. Please contact Stanley Innovation for pricing and information on fully integrated packages and base platforms http://stanleyinnovation.com/contact-us/. Stanley Innovation is the only supplier of V3 compatible hardware, so please do not expect any of this to work if you did not purchase the system or an upgrade from Stanley Innovation, Inc.**
+
+**If you want one-on-one engineering support for a system with PC, sensors, and nav...please buy one from us or contact us for an engineering support quote. Otherwise if you plan to buy your own sensors and your own computer for integration it is assumed you know what you're doing. Please use the community for support in integrating your own hardware, we will only address RMP specific questions for these customers if contacted directly. For example if you buy a barebones RMP V3 mobility platform and you need to know how to pull a faultlog, let us know; if you are trying to setup your PC and all your sensors, please rely on the community. We may help as part of the community for non-platform related questions, but there is no gaurantee**
 
 ## Installation
-Until we have released our packages in the ROS distro please follow these instructions for installing from source. The following instructions are valid for Ubuntu 14.04LTS and ROS Indigo. Before proceding please install Ubuntu 14.04LTS on the onboard computer.
+Until we have released our packages in the ROS distro please follow these instructions for installing from source. The following instructions are valid for Ubuntu 14.04LTS and ROS Indigo. Before proceding please install Ubuntu 14.04LTS.
+
+### Required components
+* **Segway RMP V3 platform provided by Stanley Innovation** 
+  * For available platforms (http://stanleyinnovation.com/products-services/robotics/robotic-mobility-platforms/)
+  * For upgrading existing RMP's (http://stanleyinnovation.com/contact-us/) 
+  * Updated with the latest firware (https://github.com/StanleyInnovation/segway_v3_embedded_firmware)
+* PC or VM Running Ubuntu 14.04 LTS
+  * If using onboard PC powered by RMP, make sure it runs on one of the voltages available on the Aux Power
+    * Standard Aux Power includes 12VDC@150W
+    * 48VDC, 24VDC, and 5VDC optional supplies available 
+  * Minimum 8GB RAM (16 GB preferably)
+  * Preferably a reasonably fast SSD
+  * Preferably 2 Gigabit NICS 
+    * You don't need 2 but it is better to have one dedicated to ROS and one to hardware)
+  * Atleast 4 USB 2.0 or higher ports 
+    * Only if using IMU, GPS and joystick
+  * Atleast 1 USB 3.0 port 
+    * Only if using PGR Flea3 USB3 camera
+  * Some sort of graphics for setup
+* **Components for Setup**
+  * Monitor
+  * Keyboard (and mouse probably)
+  * Internet Connection
+  * Power supply for PC
 
 ### Install ROS Indigo
 From a linux machine connected to the internet run the following commands
@@ -46,6 +72,9 @@ From a linux machine connected to the internet run the following commands
   alias clean_backups='find ./ -name '*~' | xargs rm'
   alias clean_pyc='find ./ -name '*.pyc' | xargs rm'
   alias clean_rosbuild='rm -rf build devel install'
+  alias segstop='sudo service segway-core stop'
+  alias segstart='sudo service segway-core start'
+  alias segchk='sudo tail /var/log/upstart/segway-core.log -n 30'
   ``` 
 
 6. **Getting rosinstall**
@@ -67,8 +96,216 @@ From a linux machine connected to the internet run the following commands
   ```
   sudo apt-get install ros-indigo-navigation ros-indigo-gmapping ros-indigo-robot-localization ros-indigo-yocs-cmd-vel-mux ros-indigo-joy ros-indigo-urg-node ros-indigo-lms1xx ros-indigo-pointgrey-camera-driver ros-indigo-cmake-modules daemontools openssh-server
   ```
+3. **Add yourself to the dialout group** 
+  * This is necessary if you have serial, or serial-USB devices
+  ```
+  sudo adduser **_USERNAME_** dialout
+  ```
+4. **Create a workspace in your home directory**
+  ```
+  mkdir -p ~/segway_ws/src
+  cd ~/segway_ws/src
+  catkin_init_workspace
+  cd ..
+  catkin_make
+  cd ~/segway_ws/src
+  git clone https://github.com/StanleyInnovation/segway_v3.git
+  git clone https://github.com/StanleyInnovation/segway_v3.git
+  git clone https://github.com/StanleyInnovation/segway_v3_desktop.git
+  ```
+  * You only need segway_v3_desktop if you want to visualize on this machine
+5. **Edit the setup configuration**
+  * To setup your robot configuration edit the 50.segway_config.sh file
+  ```
+  gedit ~/segway_ws/src/segway_robot/segway_bringup/env-hooks/50.segway_config.sh
+  ```
+  * Run through it, it allows you to set all the variables needed to customize your platform
+  * By default it is setup for an RMP 210 V3 with no sensors
+  * Make sure to set **SEGWAY_POWERS_PC_ONBOARD** appropriately
+    * Setting it true will make sure the PC shutsdown before RMP power is removed
+    * Setting it false means that the PC will be powered from something other than the RMP (like a laptop battery)
+  * Make sure **ROBOT_NETWORK** is set to the physical port ROS will communicate to the outside world on
+    * See the next section for details on network configuration
+  * To change the platform to another model (available models RMP_210, RMP_220, RMP_440LE, RMP_440SE, RMP_OMNI)
+    * Edit the variable **SEGWAY_BASE_PLATFORM**
+      * This is the platform the RMP is based on
+    * Edit the variable **SEGWAY_PLATFORM_NAME**
+      * This is the name of the custom robot
+      * **SEGWAY_BASE_PLATFORM** is generally the same as **SEGWAY_PLATFORM_NAME**; unless you create a custom platform or buy one from us
+  * For all models except the 210 set SEGWAY_HAS_BSA to true
+  * SEGWAY_RUNS_IN_BALANCE_MODE should only be set for the 220 if you want to run in Balance mode
+    * **WARNING!! Do not run navigation in balance mode unless you have read the manual and fully understand the caveats of balance mode**
+  * The rest of the variables are fairly straight forward
+
+6. **Compile from source**
+  * Once you compile from source your configuration file that gets sourced is located in ~/segway_ws/devel/etc/catkin/profile.d/50.segway_config.sh
+  ```
+  cd ~/segway_ws
+  catkin_make
+  ```
+   * Assuming you followed the instructions up to this point you should have successfully compiled, a little more setup and your on your way
 
 ### Setup Network
 You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
 
+1. **Set the IP of eth1 to the robot and sensor network**
+  * The default IP of the network interface that talks to the platform is **10.66.171.4**
+  * You can set this IP static by editing /etc/network/interfaces or using the network manager
+  ```
+  sudo gedit /etc/network/interfaces
+  ```
+  * Then add these lines assuming eth1 is connected to all the sensors using ethernet and the platform 
+  ```
+  auto eth1
+  iface eth1 inet static
+  address 10.66.171.4
+  netmask 255.255.255.0
+  ```
+  * Then restart the interface
+  ```
+  sudo ifdown eth1
+  sudo ifup eth1
+  ```
+2. **Set the IP of eth0 to the ROS Network**
+  * This is the interface that any remote machines will talk to
+  * It should be the one connected to your internal network via wireless bridge or its own network via wireless AP
+  * For simplicity we will assume you have a wireless AP connected to eth0 with the following configurations
+    * IP address 10.66.172.1
+    * Subnet Mask: 255.255.255.0
+    * Gateway: 10.66.172.1
+    * DHCP enabled with range 100-150
+  * Configure eth0 there really is no default but it should be something outside the DHCP range we use **10.66.172.4**
+  ```
+  sudo gedit /etc/network/interfaces
+  ```
+  * Then add these lines assuming eth1 is connected to all the sensors using ethernet and the platform 
+  ```
+  auto eth0
+  iface eth0 inet static
+  address 10.66.171.4
+  netmask 255.255.255.0
+  ```
+  * **Note** that if you want to be able to connect to the internet you need to set the connection up to bridge to your internal wireless network, we will not cover that here
+  * Then restart the interface
+  ```
+  sudo ifdown eth1
+  sudo ifup eth1
+  ```
+4. **Make sure you setup the networking for all the sensors**
+  * **Fully integrated machines delivered by Stanley come with this all setup**
+3. **Setup chrony**
+  * If you are going to be running ROS nodes on a remote computer it is a good idea to setup chrony to synchronize time between the machines
+  * The onboard robot PC should ideally run the server
+  * There is information on how to do this out there we will not cover it here
+  * **Fully integrated machines delivered by Stanley come with this all setup**
+
+### Additional steps for PGR Flea3 camera and onboard PC powered from RMP
+
+1. **Open the grub configuration**
+```
+sudo gedit /etc/default/grub
+```
+2. **Add this line**
+```
+# disable getting stuck in menu after fail
+GRUB_RECORDFAIL_TIMEOUT=0
+```
+3. **Update the USB memory buffer to handle USB3**
+  * Locate this line
+  ```
+  GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+  ```
+  * Change it to this
+  ```
+  GRUB_CMDLINE_LINUX_DEFAULT="quiet splash usbcore usbfs_memory_mb=1000"
+  ```
+4. **Save and exit**
+5. **Update GRUB**
+```
+sudo update-grub
+sudo modprobe usbcore usbfs_memory_mb=1000
+```
+6. **Restart the computer**
+
+### Almost Done!
+**You are so close! Only a few extra steps...**
+**NOTE: Power the PC from an external power supply until you have finished testing**
+
+1. **If you have followed the instructions and set everything up correctly you should be able to launch the system manually**
+  * Ensure the Disable button is not pressed
+  * Power the RMP on with the silver button
+    * LED Ring should pulse blue
+    * The Power LED will blink green
+    * The status LED should blink yellow indicating the state
+  * In a new terminal
+  ```
+  cd ~/segway_ws
+  sws
+  roslaunch segway_bringup stanley_innovation_system.launch
+  ```
+  * You should hear 2 beeps when the configuration server is initialized and 2 more when the platform is ready to accept commands
+  * The launch is time staged so it takes ~15 seconds to complete
+  * If you are having issues communicating with the platform
+    * you may have something wrong with your network configuration
+    * you may have set the wrong platform in the configuration
+    * you may have the wrong embedded firmware
+    * the platform may not be on
+    * the kill switch is pressed
+  * If you are getting errors on sensors
+    * you may have the wrong ones or the may not be setup correctly
+2. **Manual launch works, time to install the service**
+  * Kill any ROS nodes that may be running <Ctrl-C> and close all terminals
+  * Open a new terminal and install the upstart service
+  ```
+  cd ~/segway_ws
+  sws
+  rosrun segway_bringup install_segway_core
+  ```
+3. **Start the service and make sure it starts up fine**
+  * In the terminal enter
+  ```
+  segstart
+  ```
+  * Make sure everything starts fine you can repeatedly enter the following until the launch is finished
+  ```
+  segchk
+  ```
+  * You should hear 2 beeps when the configuration server is initialized and 2 more when the platform is ready to accept commands
+  * The launch is time staged so it takes ~15 seconds to complete
+4. **Save anything you might have open**
+5. **Power off the RMP**
+  * Press the silver power button
+    * You should hear the platform play the shutdown song
+    * The status LED will turn solid red
+    * The blue LED ring on the power button will pulse quickly
+  * The PC should enter shutdown if you have configured it to run on RMP power
+  * Wait for the system to turn off.
+    * All LED will turn off after 30 sec
+7. **Connect the PC power input to RMP power output if you are powering the onboard PC from the RMP**
+8. **Power on the system**
+  * Power the RMP on with the silver button
+    * LED Ring should pulse blue
+    * The Power LED will blink green
+    * The status LED should blink yellow indicating the state
+  * If the PC is powered by the RMP, everything should start up when the platform is powered on
+    * You should hear 2 beeps when the configuration server is initialized and 2 more when the platform is ready to accept commands
+    * The launch is time staged so it takes ~15 seconds to complete  
+  * If the PC has its own power source power it on after the embedded system comes up
+
+# Congratulation!!! If you got here the robot is all setup!!! Now you just need to configure a remote PC for visualization and control.....
+# Don't you wish you sprung for that fully integrated system???
+ 
+   
+
+
+  
+  
+
+    
+   
+     
+  
+  
+  
+   
 
