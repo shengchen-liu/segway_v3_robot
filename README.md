@@ -160,7 +160,7 @@ From a linux machine connected to the internet run the following commands
   catkin_make
   ```
 
-# Assuming you followed the instructions up to this point you should have successfully compiled, a little more setup and your on your way**
+# Assuming you followed the instructions up to this point you should have successfully compiled, a little more setup and your on your way
 
 # Don't you wish you sprung for that fully integrated system???
 
