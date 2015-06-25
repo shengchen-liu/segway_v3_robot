@@ -37,7 +37,7 @@ From a linux machine connected to the internet run the following commands
 5. **Environment setup**
   * Edit the local bash environment to add a few useful aliases
   ```
-  sudo gedit ~/.bashrc
+  gedit ~/.bashrc
   ``` 
   * Add the following lines to the end of the file each provides a few shortcuts:
   ```
@@ -67,5 +67,7 @@ From a linux machine connected to the internet run the following commands
   ```
   sudo apt-get install ros-indigo-navigation ros-indigo-gmapping ros-indigo-robot-localization ros-indigo-yocs-cmd-vel-mux ros-indigo-joy ros-indigo-urg-node ros-indigo-lms1xx ros-indigo-pointgrey-camera-driver ros-indigo-cmake-modules daemontools openssh-server
   ```
-3. **Setup Network**
-  * You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
+### Setup Network
+You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
+
+
