@@ -21,22 +21,22 @@ From a linux machine connected to the internet run the following commands
       ``` 
 
 2. **Set up your ROS keys**
-```
-wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
-``` 
+  * ```
+    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
+    ``` 
 
 3. **ROS Installation**
-First, make sure your Debian package index is up-to-date:
-```
-sudo apt-get update
-sudo apt-get install ros-indigo-desktop-full
-``` 
+  * First, make sure your Debian package index is up-to-date:
+    * ```
+      sudo apt-get update
+      sudo apt-get install ros-indigo-desktop-full
+      ``` 
 
 4. **Initialize rosdep**
-```
-sudo rosdep init
-rosdep update
-``` 
+  * ```
+    sudo rosdep init
+    rosdep update
+    ``` 
 
 5. **Environment setup**
 * Edit the local bash environment to add a few useful aliases
