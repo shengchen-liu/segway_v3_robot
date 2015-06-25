@@ -1,6 +1,8 @@
 # segway_v3_robot
 Onboard PC ROS packages for the Segway RMP V3 provided by Stanley Innovation. This document roughly outlines the various steps required to setup an RMP V3 platform that has not been provided by Stanley Innovation.
 
+**This document runs through the basic setup required to get a Segway RMP V3 system running**
+
 **If you have purchased a Navigator or Navigator Elite package, this is already installed and setup with all sorts of extras, so no need to worry about going through this installation guide**
 
 **For all you brave DIYers that decided they didn't need Stanley Innovation's expertise, and went with the barebones V3 system......ENJOY!!!**
