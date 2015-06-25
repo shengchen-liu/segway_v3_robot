@@ -216,14 +216,14 @@ This is an outline but **we also provide fully integrated packages**.
   ```
   auto eth0
   iface eth0 inet static
-  address 10.66.171.4
+  address 10.66.172.4
   netmask 255.255.255.0
   ```
   * **Note** that if you want to be able to connect to the internet you need to set the connection up to bridge to your internal wireless network, we will not cover that here
   * Then restart the interface
   ```
-  sudo ifdown eth1
-  sudo ifup eth1
+  sudo ifdown eth0
+  sudo ifup eth0
   ```
 4. **Make sure you setup the networking for all the sensors**
   * Default sensor addresses are defined in 50.segway_config.sh see above 
