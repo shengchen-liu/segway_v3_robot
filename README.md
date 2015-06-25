@@ -58,13 +58,14 @@ From a linux machine connected to the internet run the following commands
 From a linux machine connected to the internet run the following commands
 
 1. **Install useful linux utilities**
-  These tools are useful for monitoring system processes, setting up networking, and setting up NTPD for the remote computer. They are not neccessary but recommended.
+  * These tools are useful for monitoring system processes, setting up networking, and setting up NTPD for the remote computer. They are not neccessary but recommended.
   ```
   sudo apt-get install iperf chrony htop bridge-utils
   ```
 2. **Install required ROS third party packages for segway_v3_robot**
+  * These are the packages that RMP V3 depends on
   ```
   sudo apt-get install ros-indigo-navigation ros-indigo-gmapping ros-indigo-robot-localization ros-indigo-yocs-cmd-vel-mux ros-indigo-joy ros-indigo-urg-node ros-indigo-lms1xx ros-indigo-pointgrey-camera-driver ros-indigo-cmake-modules daemontools openssh-server
   ```
 3. **Setup Network**
-  You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
+  * You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
