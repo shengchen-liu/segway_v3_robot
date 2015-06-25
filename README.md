@@ -1,6 +1,8 @@
 # segway_v3_robot
 Onboard PC ROS packages for the Segway RMP V3 provided by Stanley Innovation. This document roughly outlines the various steps required to setup an RMP V3 platform that has not been provided by Stanley Innovation.
 
+**If you have purchased a navigator package, this is already installed and setup**
+
 # We provide fully integrated systems with support
 **We provide standard navigation packages and fully integrated solutions with all robot setup, networking, timing, sensor integration, sensor calibration, tailored navigation tuning, and extended functionality. Our integrated packages come with fully setup onboard PC, sensor integration/calibration, and a VM for remote monitoring and control. This tutorial is for seasoned ROS integrators that can complete that work themselves with our base RMP V3 platforms. Please contact Stanley Innovation for pricing and information on fully integrated packages and base platforms http://stanleyinnovation.com/contact-us/. Stanley Innovation is the only supplier of V3 compatible hardware, so please do not expect any of this to work if you did not purchase the system or an upgrade from Stanley Innovation, Inc.**
 
@@ -102,6 +104,7 @@ From a linux machine connected to the internet run the following commands
   sudo adduser **_USERNAME_** dialout
   ```
 4. **Create a workspace in your home directory**
+  * You only need segway_v3_desktop if you want to visualize on this machine
   ```
   mkdir -p ~/segway_ws/src
   cd ~/segway_ws/src
@@ -113,7 +116,6 @@ From a linux machine connected to the internet run the following commands
   git clone https://github.com/StanleyInnovation/segway_v3.git
   git clone https://github.com/StanleyInnovation/segway_v3_desktop.git
   ```
-  * You only need segway_v3_desktop if you want to visualize on this machine
 5. **Edit the setup configuration**
   * To setup your robot configuration edit the 50.segway_config.sh file
   ```
@@ -127,23 +129,24 @@ From a linux machine connected to the internet run the following commands
   * Make sure **ROBOT_NETWORK** is set to the physical port ROS will communicate to the outside world on
     * See the next section for details on network configuration
   * To change the platform to another model (available models RMP_210, RMP_220, RMP_440LE, RMP_440SE, RMP_OMNI)
-    * Edit the variable **SEGWAY_BASE_PLATFORM**
-      * This is the platform the RMP is based on
-    * Edit the variable **SEGWAY_PLATFORM_NAME**
-      * This is the name of the custom robot
-      * **SEGWAY_BASE_PLATFORM** is generally the same as **SEGWAY_PLATFORM_NAME**; unless you create a custom platform or buy one from us
-  * For all models except the 210 set SEGWAY_HAS_BSA to true
-  * SEGWAY_RUNS_IN_BALANCE_MODE should only be set for the 220 if you want to run in Balance mode
+    * Edit the variable **SEGWAY_BASE_PLATFORM** (This is the platform the RMP is based on)
+    * Edit the variable **SEGWAY_PLATFORM_NAME** (This is the name of the custom robot)
+    * **SEGWAY_BASE_PLATFORM** is generally the same as **SEGWAY_PLATFORM_NAME**; unless you create a custom platform or buy one from us
+  * For all models except the 210 set **SEGWAY_HAS_BSA** to true
+  * **SEGWAY_RUNS_IN_BALANCE_MODE** should only be set for the 220 if you want to run in Balance mode
     * **WARNING!! Do not run navigation in balance mode unless you have read the manual and fully understand the caveats of balance mode**
   * The rest of the variables are fairly straight forward
 
 6. **Compile from source**
-  * Once you compile from source your configuration file that gets sourced is located in ~/segway_ws/devel/etc/catkin/profile.d/50.segway_config.sh
+  * **Once you compile from source your configuration file that gets sourced is located in ~/segway_ws/devel/etc/catkin/profile.d/50.segway_config.sh**
   ```
   cd ~/segway_ws
   catkin_make
   ```
-   * Assuming you followed the instructions up to this point you should have successfully compiled, a little more setup and your on your way
+
+**Assuming you followed the instructions up to this point you should have successfully compiled, a little more setup and your on your way**
+
+**Don't you wish you just sprung for the fully integrated system????**
 
 ### Setup Network
 You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
@@ -192,24 +195,33 @@ You need to set the network up for our platforms and the various ethernet enable
   sudo ifup eth1
   ```
 4. **Make sure you setup the networking for all the sensors**
+  * Default sensor addresses are defined in 50.segway_config.sh see above 
   * **Fully integrated machines delivered by Stanley come with this all setup**
 3. **Setup chrony**
   * If you are going to be running ROS nodes on a remote computer it is a good idea to setup chrony to synchronize time between the machines
   * The onboard robot PC should ideally run the server
   * There is information on how to do this out there we will not cover it here
   * **Fully integrated machines delivered by Stanley come with this all setup**
+  
+### Mechanical and Electrical integration of sensors
+* Sensors need to be configured to work with the configurations we use by default or you need to modify them.
+* Please use the community for support unless you purchased a fully integrated system in which case you likely wouldn't need this tutorial
 
-### Additional steps for PGR Flea3 camera and onboard PC powered from RMP
+
+### Additional steps
+You should probably do the regardless, but these steps are really only required PGR Flea3 camera and onboard PC powered from RMP.
 
 1. **Open the grub configuration**
-```
-sudo gedit /etc/default/grub
-```
+  * Open a terminal
+  ```
+  sudo gedit /etc/default/grub
+  ```
 2. **Add this line**
-```
-# disable getting stuck in menu after fail
-GRUB_RECORDFAIL_TIMEOUT=0
-```
+  * Configures the system to not wait at startup if boot fails
+  ```
+  # disable getting stuck in menu after fail
+  GRUB_RECORDFAIL_TIMEOUT=0
+  ```
 3. **Update the USB memory buffer to handle USB3**
   * Locate this line
   ```
@@ -221,14 +233,16 @@ GRUB_RECORDFAIL_TIMEOUT=0
   ```
 4. **Save and exit**
 5. **Update GRUB**
-```
-sudo update-grub
-sudo modprobe usbcore usbfs_memory_mb=1000
-```
+  * From the terminal
+  ```
+  sudo update-grub
+  sudo modprobe usbcore usbfs_memory_mb=1000
+  ```
 6. **Restart the computer**
 
 ### Almost Done!
 **You are so close! Only a few extra steps...**
+
 **NOTE: Power the PC from an external power supply until you have finished testing**
 
 1. **If you have followed the instructions and set everything up correctly you should be able to launch the system manually**
