@@ -1,7 +1,9 @@
 # segway_v3_robot
 Onboard PC ROS packages for the Segway RMP V3 provided by Stanley Innovation. This document roughly outlines the various steps required to setup an RMP V3 platform that has not been provided by Stanley Innovation.
 
-**If you have purchased a navigator package, this is already installed and setup**
+**If you have purchased a navigator package, this is already installed and setup, so no need to worry about going through this installation guide**
+
+**For all you brave DIYers that decided they didn't need Stanley Innovation's expertise......ENJOY!!!**
 
 # We provide fully integrated systems with support
 **We provide standard navigation packages and fully integrated solutions with all robot setup, networking, timing, sensor integration, sensor calibration, tailored navigation tuning, and extended functionality. Our integrated packages come with fully setup onboard PC, sensor integration/calibration, and a VM for remote monitoring and control. This tutorial is for seasoned ROS integrators that can complete that work themselves with our base RMP V3 platforms. Please contact Stanley Innovation for pricing and information on fully integrated packages and base platforms http://stanleyinnovation.com/contact-us/. Stanley Innovation is the only supplier of V3 compatible hardware, so please do not expect any of this to work if you did not purchase the system or an upgrade from Stanley Innovation, Inc.**
@@ -16,7 +18,7 @@ Until we have released our packages in the ROS distro please follow these instru
   * For available platforms (http://stanleyinnovation.com/products-services/robotics/robotic-mobility-platforms/)
   * For upgrading existing RMP's (http://stanleyinnovation.com/contact-us/) 
   * Updated with the latest firware (https://github.com/StanleyInnovation/segway_v3_embedded_firmware)
-* PC or VM Running Ubuntu 14.04 LTS
+* **PC or VM Running Ubuntu 14.04 LTS**
   * If using onboard PC powered by RMP, make sure it runs on one of the voltages available on the Aux Power
     * Standard Aux Power includes 12VDC@150W
     * 48VDC, 24VDC, and 5VDC optional supplies available 
