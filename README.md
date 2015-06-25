@@ -21,7 +21,7 @@ Onboard PC ROS packages for the Segway RMP V3 provided by Stanley Innovation. Th
   
 ## Mechanical and Electrical Integration of Sensors, Manipulators and other peripherals
 * Before starting software setup make sure you have all your sensors mounted and electrically integrated
-* You will need their location relative to the SEGWAY_PARENT_LINK defined in the configuration (see below in Robot Customization)
+* You will need their location relative to the **SEGWAY_PARENT_LINK** defined in the configuration (see below in Robot Customization)
 * Sensors need to be configured to work with the network and serial configurations we use by default or you need to modify them.
 * For questions about electrical integration into the RMP power system see the manual and ask us if you have questions
 * For mechanical 3D models please visit our website http://stanleyinnovation.com/resources/ at the bottom of the page
