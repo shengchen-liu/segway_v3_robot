@@ -14,31 +14,31 @@ http://releases.ubuntu.com/14.04/
 ### Install ROS Indigo
 From a linux machine connected to the internet run the following commands
 
-1. **Setup your ROS sources.list**
+1.**Setup your ROS sources.list**
 Setup your computer to accept software from packages.ros.org. ROS Indigo ONLY supports Saucy (13.10) and Trusty (14.04) for debian packages.
 ```
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 ``` 
 
-2. **Set up your ROS keys**
+2.**Set up your ROS keys**
 ```
 wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
 ``` 
 
-3. **ROS Installation**
+3.**ROS Installation**
 First, make sure your Debian package index is up-to-date:
 ```
 sudo apt-get update
 sudo apt-get install ros-indigo-desktop-full
 ``` 
 
-4. **Initialize rosdep**
+4.**Initialize rosdep**
 ```
 sudo rosdep init
 rosdep update
 ``` 
 
-5. **Environment setup**
+5.**Environment setup**
 Edit the local bash environment to add a few useful aliases
 ```
 sudo gedit ~/.bashrc
@@ -59,7 +59,7 @@ alias clean_pyc='find ./ -name '*.pyc' | xargs rm'
 alias clean_rosbuild='rm -rf build devel install'
 ``` 
 
-6. **Getting rosinstall**
+6.**Getting rosinstall**
 rosinstall is a frequently used command-line tool in ROS that is distributed separately. It enables you to easily download many source trees for ROS packages with one command.
 ```
 sudo apt-get install python-rosinstall
