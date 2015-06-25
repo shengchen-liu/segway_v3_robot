@@ -52,6 +52,8 @@ Until we have released our packages in the ROS distro please follow these instru
   * Atleast 1 USB 3.0 port 
     * Only if using PGR Flea3 USB3 camera
   * Some sort of graphics for setup
+  * Wireless router (preferably AC Dual-Band)
+    * We provide the WRT-AC1900 with our integrated systems
 * **Components for Setup**
   * Monitor
   * Keyboard (and mouse probably)
