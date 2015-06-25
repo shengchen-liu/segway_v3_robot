@@ -63,7 +63,6 @@ sudo apt-get install python-rosinstall
 
 ### Install required packages
 From a linux machine connected to the internet run the following commands
-
 1. **Install useful linux utilities**
 These tools are useful for monitoring system processes, setting up networking, and setting up NTPD for the remote computer. They are not neccessary but recommended.
 ```
@@ -75,6 +74,3 @@ sudo apt-get install ros-indigo-navigation ros-indigo-gmapping ros-indigo-robot-
 ```
 3. **Setup Network**
 You need to set the network up for our platforms and the various ethernet enabled sensors. This is an outline but **we also provide fully integrated packages**.
-
-
-
