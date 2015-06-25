@@ -16,9 +16,9 @@ From a linux machine connected to the internet run the following commands
 
 1. **Setup your ROS sources.list**
   * Setup your computer to accept software from packages.ros.org. ROS Indigo ONLY supports Saucy (13.10) and Trusty (14.04) for debian packages.
-    ```
-    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-    ``` 
+    * ```
+      sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+      ``` 
 
 2. **Set up your ROS keys**
 ```
