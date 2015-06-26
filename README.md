@@ -147,7 +147,8 @@ From a linux machine connected to the internet run the following commands
 1. **Edit the setup configuration**
   * To setup your robot configuration edit the 50.segway_config.sh file
   ```
-  gedit ~/segway_ws/src/segway_robot/segway_bringup/env-hooks/50.segway_config.sh
+  cd ~/segway_ws/src/segway_v3_robot/segway_bringup/env-hooks
+  gedit 50.segway_config.sh
   ```
   * Run through it, it allows you to set all the variables needed to customize your platform
   * By default it is setup for an RMP 210 V3 with no sensors
