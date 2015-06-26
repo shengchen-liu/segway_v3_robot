@@ -122,7 +122,7 @@ From a linux machine connected to the internet run the following commands
 2. **Install required ROS third party packages for segway_v3_robot**
   * These are the packages that RMP V3 depends on
   ```
-  sudo apt-get install ros-indigo-navigation ros-indigo-gmapping ros-indigo-robot-localization ros-indigo-yocs-cmd-vel-mux ros-indigo-joy ros-indigo-urg-node ros-indigo-lms1xx ros-indigo-pointgrey-camera-driver ros-indigo-cmake-modules daemontools openssh-server
+  sudo apt-get install ros-indigo-navigation ros-indigo-gmapping ros-indigo-robot-localization ros-indigo-yocs-cmd-vel-mux ros-indigo-joy ros-indigo-urg-node ros-indigo-lms1xx ros-indigo-pointgrey-camera-driver ros-indigo-cmake-modules daemontools openssh-server libpcap0.8-dev
   ```
 3. **Add yourself to the dialout group** 
   * This is necessary if you have serial, or serial-USB devices
