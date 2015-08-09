@@ -12,6 +12,8 @@
         <rosparam file="$(find segway_bringup)/launch/teleop/config/$(optenv SEGWAY_JOY_MAPPING xbox360).yaml" command="load"/>
     </node>
     
+    <node pkg="segway_ros" ns="segway" type="segway_marker_ctrl" name="segway_marker_ctrl" output="screen"/>
+    
     <group ns="segway">
         <node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager"/>
         <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="load yocs_cmd_vel_mux/CmdVelMuxNodelet nodelet_manager">
