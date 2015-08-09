@@ -154,9 +154,9 @@ if [ $SEGWAY_HAS_SICK == true ]; then
   fi
 fi
 
-echo "Delaying upstart for 5 seconds.................."
+echo "Delaying upstart for 10 seconds.................."
 
-sleep 5
+sleep 10
 
 # Punch it.
 export ROS_HOME=$(echo ~@(user))/.ros
