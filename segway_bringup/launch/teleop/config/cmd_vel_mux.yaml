@@ -15,16 +15,28 @@ subscribers:
   - name:        "Manual Override"
     topic:       "/segway/manual_override/cmd_vel"
     timeout:     2.0
-    priority:    2
+    priority:    4
 
-  - name:        "MoveBase (ROS Navigation)"
-    topic:       "/segway/navigation/cmd_vel"
-    timeout:     0.5
-    priority:    1
-        
+  - name:        "Assisted Teleop"
+    topic:       "/segway/assisted_teleop/cmd_vel"
+    timeout:     1.0
+    priority:    3
+            
   - name:        "XBOX360 Controller"
     topic:       "/segway/teleop/cmd_vel"
     timeout:     1.0
+    priority:    2
+
+  - name:        "Interactive Marker"
+    topic:       "/segway/int_marker/cmd_vel"
+    timeout:     0.5
+    priority:    1
+    
+  - name:        "MoveBase (ROS Navigation)"
+    topic:       "/segway/navigation/cmd_vel"
+    timeout:     0.5
     priority:    0
+
+
     
 publisher:       "/segway/cmd_vel"
