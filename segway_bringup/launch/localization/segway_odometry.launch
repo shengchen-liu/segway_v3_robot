@@ -23,7 +23,7 @@
             <rosparam command="load" 
                 file="$(find segway_bringup)/launch/localization/config/common_localization_params.yaml"/>
             <rosparam command="load" 
-                file="$(find segway_bringup)/launch/localization/config/base_platform_localization_params.yaml"/>
+                file="$(find segway_bringup)/launch/localization/config/base_platform_localization_params.yaml" unless="$(optenv SEGWAY_USE_GPS_FOR_LOCAL_ODOM false)"/>
             <rosparam command="load" 
                 file="$(find segway_bringup)/launch/localization/config/gps_localization_params.yaml" if="$(optenv SEGWAY_USE_GPS_FOR_LOCAL_ODOM false)"/>
                 
@@ -37,8 +37,6 @@
         <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global_localization" clear_params="true" if="$(optenv SEGWAY_USE_GPS_FOR_GLOBAL_LOCALIZATION false)">
             <rosparam command="load" 
                 file="$(find segway_bringup)/launch/localization/config/common_localization_params.yaml"/>
-            <rosparam command="load" 
-                file="$(find segway_bringup)/launch/localization/config/gps_localization_params.yaml"/>
             <rosparam command="load" 
                 file="$(find segway_bringup)/launch/localization/config/global_gps_localization_params.yaml"/>
                 
