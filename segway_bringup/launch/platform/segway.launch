@@ -8,6 +8,9 @@
     <!-- Segway Base platform ROS Driver -->
     <node pkg="segway_ros" ns="segway" type="segway_driver" name="segway_driver" respawn="true" output="screen">
         <param name="platform" value="$(optenv SEGWAY_BASE_PLATFORM false)" />
+        <param name="use_platform_odometry" value="$(optenv SEGWAY_USE_PLATFORM_ODOMETRY false)" />
+        <param name="ext_imu_src" value="um7_imu" if="$(optenv SEGWAY_HAS_UM7_IMU false)"/>
+        <param name="ext_imu_src" value="3dm_gx3" if="$(optenv SEGWAY_HAS_MICROSTRAIN_3DM_GX3_35 false)"/>
     </node>
 
     <!-- Platform specific robot state publisher and parameters -->

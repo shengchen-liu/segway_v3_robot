@@ -8,13 +8,14 @@ find_package(catkin REQUIRED COMPONENTS roslaunch)
 
 ## Declare a catkin package
 catkin_package()
-catkin_add_env_hooks(50.segway_config
+
+catkin_add_env_hooks(50.segway_robot_config
   SHELLS sh DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
 
 roslaunch_add_file_check(launch)
 
 ## Install ## 
-install(PROGRAMS scripts/install_segway_core scripts/uninstall_segway_core scripts/timed_roslaunch 
+install(PROGRAMS scripts/install_segway_core scripts/uninstall_segway_core
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

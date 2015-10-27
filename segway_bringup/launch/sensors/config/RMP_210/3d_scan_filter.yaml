@@ -3,7 +3,7 @@ scan_filter_chain:
   name: shadows
   params:
     min_angle: 0
-    max_angle: 170
+    max_angle: 175
     neighbors: 5
     window: 1
 - type: laser_filters/LaserScanRangeFilter
@@ -21,5 +21,5 @@ scan_filter_chain:
   name: footprint_filter
   params:
     base_frame: /segway/base_link
-    footprint: [0.2,0.3,0.2,-0.3,-0.35,-0.25,-0.35,0.25]
+    footprint: [0.45,0.35,0.45,-0.35,-0.45,-0.35,-0.45,0.35]
 
