@@ -137,20 +137,20 @@ if [ $SEGWAY_HAS_HOKUYO == true ]; then
   fi
 fi
 
-if [ $SEGWAY_HAS_SICK == true ]; then
+if [ $SEGWAY_HAS_SICK_TIM == true ]; then
   temp=1
   cnts=0
   while [ $cnts -lt 5 ] && [ $temp -ne 0 ]; do
-    ping -q -c 1 -W 1 $SEGWAY_SICK_IP >/dev/null
+    ping -q -c 1 -W 1 $SEGWAY_SICK_TIM_IP >/dev/null
     temp=$?
     cnts=$[$cnts+1]
   done
 
   if [ $temp -ne 0 ]; then
-    echo "failed to ping SICK at $SEGWAY_SICK_IP."
+    echo "failed to ping SICK at $SEGWAY_SICK_TIM_IP."
     exit 1
   else
-    echo "Successfully pinged SICK at $SEGWAY_SICK_IP." 
+    echo "Successfully pinged SICK at $SEGWAY_SICK_TIM_IP." 
   fi
 fi
 
