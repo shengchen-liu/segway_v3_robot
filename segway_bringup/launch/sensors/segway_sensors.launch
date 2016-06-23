@@ -138,7 +138,7 @@
     </group>
 
     <group if="$(optenv SEGWAY_HAS_NEO7 false)"> 
-        <node name="gps" pkg="ublox_gps" type="ublox_gps" respawn="true" >
+        <node name="gps" pkg="ublox_gps" type="ublox_gps" respawn="false" >
             <remap from="fix" to="/segway/feedback/gps/fix_2d"/>
             <param name="device" type="string" value="$(env SEGWAY_NEO7_DEV)"/>
             <param name="frame_id" type="string" value="/segway/gps_frame"/>
