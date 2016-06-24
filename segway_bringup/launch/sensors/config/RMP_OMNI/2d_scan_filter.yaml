@@ -9,8 +9,8 @@ scan_filter_chain:
 - type: laser_filters/LaserScanRangeFilter
   name: range
   params: 
-    lower_threshold: 0.1
-    upper_threshold: 18.0 
+    lower_threshold: 0.05
+    upper_threshold: 25.0 
 - type: laser_filters/LaserScanIntensityFilter
   name: intensity
   params: 
@@ -20,6 +20,6 @@ scan_filter_chain:
 - type: range_sensor_filters/LaserScanFootprintFilter
   name: footprint_filter
   params:
-    base_frame: /segway/base_link
+    base_frame: segway/base_link
     footprint: [0.7875,-0.3945,0.7875,0.3945,-0.7875,0.3945,-0.7875,-0.3945,0.7875,-0.3945]
 

@@ -1,5 +1,0 @@
-frame_id: segway/base_link
-loop_rate: 15
-input_scans:
-- /segway/front_scan
-- /segway/rear_scan
