@@ -12,6 +12,7 @@
     <run_depend>segway_assisted_teleop</run_depend>
     <run_depend>range_sensor_filters</run_depend>
     <run_depend>but_velodyne_proc</run_depend>
+    <run_depend>cob_scan_unifier</run_depend>
 
     <export>
     <metapackage/>

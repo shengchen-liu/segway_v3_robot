@@ -22,48 +22,92 @@
         </include>
         <!-- need to add kinect one bridge here -->
     </group>
-    
-    <group if="$(optenv SEGWAY_HAS_2D_LASER false)">
 
-        <node pkg="urg_node" type="urg_node" name="hokuyo_node" clear_params="true" respawn="true" if="$(optenv SEGWAY_HAS_HOKUYO false)">
-            <remap from="scan" to="/segway/scan" />
-            <param name="ip_address" value="$(optenv SEGWAY_HOKUYO_IP 10.66.171.6)" />
-            <param name="ip_port" value="$(optenv SEGWAY_HOKUYO_PORT 10940)" />
-            <param name="frame_id" value="segway/base_laser_link"/>
+    <group if="$(optenv SEGWAY_HAS_ONE_2D_LASER false)">
+        <node pkg="urg_node" type="urg_node" name="$(optenv LASER1_PREFIX base)_laser_node" clear_params="true" respawn="true" if="$(optenv SEGWAY_LASER1_IS_HOKUYO false)">
+            <remap from="scan" to="/segway/$(optenv LASER1_PREFIX base)_scan" />
+            <param name="ip_address" value="$(optenv SEGWAY_LASER1_IP 10.66.171.6)" />
+            <param name="ip_port" value="$(optenv SEGWAY_LASER1_PORT 10940)" />
+            <param name="frame_id" value="segway/$(optenv LASER1_PREFIX base)_laser_link"/>
             <param name="calibrate_time" value="false" />
             <param name="publish_intensity" value="true" />
         </node>
         
-        <node pkg="sick_tim" type="sick_tim551_2050001" name="sick_tim571_2050101" respawn="false" if="$(optenv SEGWAY_HAS_SICK_TIM false)">
-            <remap from="scan" to="/segway/scan" />
+        <node pkg="sick_tim" type="sick_tim551_2050001" name="$(optenv LASER1_PREFIX base)_laser_node" clear_params="true" respawn="true" if="$(optenv SEGWAY_LASER1_IS_SICK_TIM false)">
+            <remap from="scan" to="/segway/$(optenv LASER1_PREFIX base)_scan" />
             <param name="min_ang" type="double" value="-2.35619449019" />
             <param name="max_ang" type="double" value="2.35619449019" />
             <param name="intensity" type="bool" value="True" />
             <param name="skip" type="int" value="0" />
-            <param name="frame_id" type="str" value="segway/base_laser_link" />
+            <param name="frame_id" type="str" value="segway/$(optenv LASER1_PREFIX base)_laser_link" />
             <param name="time_offset" type="double" value="-0.001" />
             <param name="publish_datagram" type="bool" value="False" />
             <param name="subscribe_datagram" type="bool" value="false" />
             <param name="range_min" type="double" value="0.05" />
             <param name="range_max" type="double" value="25.0" />
-            <param name="hostname" type="string" value="$(optenv SEGWAY_SICK_TIM_IP 10.66.171.8)" />
-            <param name="port" type="string" value="$(optenv SEGWAY_SICK_TIM_PORT 2112)" />
+            <param name="hostname" type="string" value="$(optenv SEGWAY_LASER1_IP 10.66.171.8)" />
+            <param name="port" type="string" value="$(optenv SEGWAY_LASER1_PORT 2112)" />
             <param name="timelimit" type="int" value="5" />
 
             <!-- Older versions of the scanner firmware report an incorrect time_increment.
              If you get a warning about time_increment, uncomment this. -->
-            <!-- <param name="time_increment" type="double" value="0.000061722" /> -->
+            <!-- <param name="time_increment" type="double" value="0.000061722" /-->
         </node>
     
-        <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="segway_laser_filter" clear_params="true" respawn="true">
-            <remap from="scan" to="/segway/scan" />
+        <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="segway_laser_filter" clear_params="true" respawn="true" unless="$(optenv SEGWAY_HAS_SECOND_2D_LASER false)">
+            <remap from="scan" to="/segway/$(optenv LASER1_PREFIX base)_scan" />
             <remap from="scan_filtered" to="/segway/filtered_scan" />
-            <param name="target_frame" value="segway/base_laser_link" />
+            <param name="target_frame" value="segway/base_link" />
             <param name="high_fidelity" value="true" />
             <rosparam command="load" 
                 file="$(find segway_bringup)/launch/sensors/config/$(optenv SEGWAY_PLATFORM_NAME RMP210)/2d_scan_filter.yaml" />
         </node>
-    </group>	
+    </group>
+    
+    <group if="$(optenv SEGWAY_HAS_SECOND_2D_LASER false)">
+        <node pkg="urg_node" type="urg_node" name="$(optenv LASER2_PREFIX base)_laser_node" clear_params="true" respawn="true" if="$(optenv SEGWAY_LASER2_IS_HOKUYO false)">
+            <remap from="scan" to="/segway/$(optenv LASER2_PREFIX rear)_scan" />
+            <param name="ip_address" value="$(optenv SEGWAY_LASER2_IP 10.66.171.7)" />
+            <param name="ip_port" value="$(optenv SEGWAY_LASER2_PORT 10940)" />
+            <param name="frame_id" value="segway/$(optenv LASER2_PREFIX rear)_laser_link"/>
+            <param name="calibrate_time" value="false" />
+            <param name="publish_intensity" value="true" />
+        </node>
+        
+        <node pkg="sick_tim" type="sick_tim551_2050001" name="$(optenv LASER2_PREFIX base)_laser_node" respawn="false" if="$(optenv SEGWAY_LASER2_IS_SICK_TIM false)">
+            <remap from="scan" to="/segway/$(optenv LASER2_PREFIX rear)_scan" />
+            <param name="min_ang" type="double" value="-2.35619449019" />
+            <param name="max_ang" type="double" value="2.35619449019" />
+            <param name="intensity" type="bool" value="True" />
+            <param name="skip" type="int" value="0" />
+            <param name="frame_id" type="str" value="/segway/$(optenv LASER2_PREFIX rear)_laser_link" />
+            <param name="time_offset" type="double" value="-0.001" />
+            <param name="publish_datagram" type="bool" value="False" />
+            <param name="subscribe_datagram" type="bool" value="false" />
+            <param name="range_min" type="double" value="0.05" />
+            <param name="range_max" type="double" value="25.0" />
+            <param name="hostname" type="string" value="$(optenv SEGWAY_LASER2_IP 10.66.171.9)" />
+            <param name="port" type="string" value="$(optenv SEGWAY_LASER2_PORT 2112)" />
+            <param name="timelimit" type="int" value="5" />
+            <!-- Older versions of the scanner firmware report an incorrect time_increment.
+             If you get a warning about time_increment, uncomment this. -->
+            <!-- <param name="time_increment" type="double" value="0.000061722" /-->
+        </node>
+	    
+        <node pkg="cob_scan_unifier" type="scan_unifier_node" name="scan_unifier_node" respawn="false">
+            <remap from="scan_unified" to="/segway/unified_scan"/>
+            <rosparam command="load" file="$(find segway_bringup)/launch/sensors/config/laser_unifier.yaml"/>
+	    </node>
+	    
+        <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="segway_laser_filter" clear_params="true" respawn="true">
+            <remap from="scan" to="/segway/unified_scan" />
+            <remap from="scan_filtered" to="/segway/filtered_scan" />
+            <param name="target_frame" value="segway/base_link" />
+            <param name="high_fidelity" value="true" />
+            <rosparam command="load" 
+                file="$(find segway_bringup)/launch/sensors/config/$(optenv SEGWAY_PLATFORM_NAME RMP210)/2d_scan_filter.yaml" />
+        </node>
+	</group>	
 
 
 	<group if="$(optenv SEGWAY_HAS_VLP16 false)">
@@ -138,7 +182,7 @@
     </group>
 
     <group if="$(optenv SEGWAY_HAS_NEO7 false)"> 
-        <node name="gps" pkg="ublox_gps" type="ublox_gps" respawn="false" >
+        <node name="gps" pkg="ublox_gps" type="ublox_gps" respawn="true" >
             <remap from="fix" to="/segway/feedback/gps/fix_2d"/>
             <param name="device" type="string" value="$(env SEGWAY_NEO7_DEV)"/>
             <param name="frame_id" type="string" value="/segway/gps_frame"/>
