@@ -120,37 +120,37 @@ if [ $SEGWAY_HAS_VLP16 == true ]; then
   fi
 fi
 
-if [ $SEGWAY_HAS_HOKUYO == true ]; then
+if [ $SEGWAY_HAS_ONE_2D_LASER == true ]; then
   temp=1
   cnts=0
   while [ $cnts -lt 5 ] && [ $temp -ne 0 ]; do
-    ping -q -c 1 -W 1 $SEGWAY_HOKUYO_IP >/dev/null
+    ping -q -c 1 -W 1 $SEGWAY_LASER1_IP >/dev/null
     temp=$?
     cnts=$[$cnts+1]
   done
 
   if [ $temp -ne 0 ]; then
-    echo "failed to ping HOKUYO at $SEGWAY_HOKUYO_IP."
+    echo "failed to ping LASER1 at $SEGWAY_LASER1_IP."
     exit 1
   else
-    echo "Successfully pinged HOKUYO at $SEGWAY_HOKUYO_IP." 
+    echo "Successfully pinged LASER1 at $SEGWAY_LASER1_IP." 
   fi
 fi
 
-if [ $SEGWAY_HAS_SICK_TIM == true ]; then
+if [ $SEGWAY_HAS_SECOND_2D_LASER == true ]; then
   temp=1
   cnts=0
   while [ $cnts -lt 5 ] && [ $temp -ne 0 ]; do
-    ping -q -c 1 -W 1 $SEGWAY_SICK_TIM_IP >/dev/null
+    ping -q -c 1 -W 1 $SEGWAY_LASER2_IP >/dev/null
     temp=$?
     cnts=$[$cnts+1]
   done
 
   if [ $temp -ne 0 ]; then
-    echo "failed to ping SICK at $SEGWAY_SICK_TIM_IP."
+    echo "failed to ping LASER2 at $SEGWAY_LASER2_IP."
     exit 1
   else
-    echo "Successfully pinged SICK at $SEGWAY_SICK_TIM_IP." 
+    echo "Successfully pinged LASER2 at $SEGWAY_LASER2_IP." 
   fi
 fi
 
