@@ -158,10 +158,10 @@ From a linux machine connected to the internet run the following commands
   
 ### Robot Customization
 1. **Edit the setup configuration**
-  * To setup your robot configuration edit the 50.segway_config.sh file
+  * To setup your robot configuration edit the segway_config.sh file
   ```
-  cd ~/segway_ws/src/segway_v3_robot/segway_bringup/env-hooks
-  gedit 50.segway_config.sh
+  cd ~/segway_ws/src/segway_v3/segway_v3_config
+  gedit segway_config.sh
   ```
   * Run through it, it allows you to set all the variables needed to customize your platform
   * By default it is setup for an RMP 210 V3 with no sensors
@@ -308,7 +308,7 @@ You should probably do the regardless, but these steps are really only required 
     * the platform may not be on
     * the kill switch is pressed
   * If you are getting errors on sensors
-    * you may have the wrong ones or the may not be setup correctly
+    * you may have the wrong ones or they may not be setup correctly
 2. **Manual launch works, time to install the service**
   * Kill any ROS nodes that may be running <Ctrl-C> and close all terminals
   * Open a new terminal and install the upstart service
