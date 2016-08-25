@@ -99,15 +99,15 @@ From a linux machine connected to the internet run the following commands
   {
     if [ ! -z "$1" ]
     then
-      local dest='/home/sibot/segway_ws/src/segway_v3/segway_navigation/segway_navigation_apps/maps/'$1
+      local dest='~/segway_ws/src/segway_v3/segway_navigation/segway_navigation_apps/maps/'$1
     else
-      local dest='/home/sibot/segway_ws/src/segway_v3/segway_navigation/segway_navigation_apps/maps/mymap'
+      local dest='~/segway_ws/src/segway_v3/segway_navigation/segway_navigation_apps/maps/mymap'
     fi
 
     rosrun map_server map_saver -f $dest
   }
   
-  source /home/sibot/segway_ws/devel/setup.bash
+  source ~/segway_ws/devel/setup.bash
   source /opt/ros/indigo/setup.bash
   alias sws='source ./devel/setup.bash'
   alias clean_backups='find ./ -name '*~' | xargs rm'
