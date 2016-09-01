@@ -19,7 +19,9 @@
     <run_depend>ublox</run_depend>
     <run_depend>segway_ros</run_depend>
     <run_depend>segway_upstart</run_depend>
-    <run_depend>segway_sensor_filters</run_depend>
+    <run_depend>but_velodyne</run_depend>
+    <run_depend>ira_laser_tools</run_depend>
+    <run_depend>range_sensor_filters</run_depend>
     <run_depend>si_utils</run_depend>
     <run_depend>segway_v3_config</run_depend>
 
