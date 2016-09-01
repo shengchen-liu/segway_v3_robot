@@ -16,7 +16,9 @@
     <run_depend>robot_localization</run_depend>
     <run_depend>yocs_cmd_vel_mux</run_depend>
     <run_depend>urg_node</run_depend>
-    <run_depend>ublox</run_depend>
+    <run_depend>ublox_gps</run_depend>
+    <run_depend>ublox_msgs</run_depend>
+    <run_depend>ublox_serialization</run_depend>
     <run_depend>segway_ros</run_depend>
     <run_depend>segway_upstart</run_depend>
     <run_depend>but_velodyne</run_depend>
