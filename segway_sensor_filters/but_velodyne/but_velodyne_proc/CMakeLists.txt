@@ -17,8 +17,28 @@ find_package(catkin
 
 find_package(PkgConfig REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-find_package( Eigen REQUIRED )
-include_directories( ${EIGEN_INCLUDE_DIRS})
+
+# Starting in ROS Jade, using cmake_modules to find Eigen is deprecated.
+# Instead, find_package(Eigen3) is called which uses the cmake config included
+# with the system install of Eigen. For compatibility with older ROS distros,
+# we fall back to the cmake_modules version if needed.
+#
+# See http://wiki.ros.org/jade/Migration#Eigen_CMake_Module_in_cmake_modules
+#
+find_package(Eigen3)
+if(NOT EIGEN3_FOUND)
+  # Fallback to cmake_modules
+  find_package(cmake_modules REQUIRED)
+  find_package(Eigen REQUIRED)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
+else()
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
+
+include_directories(include ${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
+link_directories(${catkin_LIBRARY_DIRS} ${EIGEN3_LIBRARY_DIRS})
+
+include_directories( ${EIGEN3_INCLUDE_DIRS})
 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS})
