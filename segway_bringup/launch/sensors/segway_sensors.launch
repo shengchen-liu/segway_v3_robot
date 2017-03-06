@@ -31,20 +31,22 @@
             <param name="frame_id" value="segway/$(optenv LASER1_PREFIX base)_laser_link"/>
             <param name="calibrate_time" value="false" />
             <param name="publish_intensity" value="true" />
+            <param name="angle_max" value="$(optenv LASER1_MAX_ANGLE 2.35619449019)"/>
+            <param name="angle_min" value="$(optenv LASER1_MIN_ANGLE -2.35619449019)"/>
         </node>
         
         <node pkg="sick_tim" type="sick_tim551_2050001" name="$(optenv LASER1_PREFIX base)_laser_node" clear_params="true" respawn="true" if="$(optenv SEGWAY_LASER1_IS_SICK_TIM false)">
             <remap from="scan" to="/segway/$(optenv LASER1_PREFIX base)_scan" />
-            <param name="min_ang" type="double" value="-2.35619449019" />
-            <param name="max_ang" type="double" value="2.35619449019" />
+            <param name="max_ang" value="$(optenv LASER1_MAX_ANGLE 2.35619449019)"/>
+            <param name="min_ang" value="$(optenv LASER1_MIN_ANGLE -2.35619449019)"/>
             <param name="intensity" type="bool" value="True" />
             <param name="skip" type="int" value="0" />
             <param name="frame_id" type="str" value="segway/$(optenv LASER1_PREFIX base)_laser_link" />
             <param name="time_offset" type="double" value="-0.001" />
             <param name="publish_datagram" type="bool" value="False" />
             <param name="subscribe_datagram" type="bool" value="false" />
-            <param name="range_min" type="double" value="0.05" />
-            <param name="range_max" type="double" value="25.0" />
+            <param name="range_min" type="double" value="$(optenv LASER1_MIN_RANGE 0.05)" />
+            <param name="range_max" type="double" value="$(optenv LASER1_MAX_RANGE 20.0)" />
             <param name="hostname" type="string" value="$(optenv SEGWAY_LASER1_IP 10.66.171.8)" />
             <param name="port" type="string" value="$(optenv SEGWAY_LASER1_PORT 2112)" />
             <param name="timelimit" type="int" value="5" />
@@ -72,20 +74,22 @@
             <param name="frame_id" value="segway/$(optenv LASER2_PREFIX rear)_laser_link"/>
             <param name="calibrate_time" value="false" />
             <param name="publish_intensity" value="true" />
+            <param name="angle_max" value="$(optenv LASER2_MAX_ANGLE 2.35619449019)"/>
+            <param name="angle_min" value="$(optenv LASER2_MIN_ANGLE -2.35619449019)"/>
         </node>
         
         <node pkg="sick_tim" type="sick_tim551_2050001" name="$(optenv LASER2_PREFIX base)_laser_node" respawn="false" if="$(optenv SEGWAY_LASER2_IS_SICK_TIM false)">
             <remap from="scan" to="/segway/$(optenv LASER2_PREFIX rear)_scan" />
-            <param name="min_ang" type="double" value="-2.35619449019" />
-            <param name="max_ang" type="double" value="2.35619449019" />
+            <param name="max_ang" value="$(optenv LASER2_MAX_ANGLE 2.35619449019)"/>
+            <param name="min_ang" value="$(optenv LASER2_MIN_ANGLE -2.35619449019)"/>
             <param name="intensity" type="bool" value="True" />
             <param name="skip" type="int" value="0" />
             <param name="frame_id" type="str" value="/segway/$(optenv LASER2_PREFIX rear)_laser_link" />
             <param name="time_offset" type="double" value="-0.001" />
             <param name="publish_datagram" type="bool" value="False" />
             <param name="subscribe_datagram" type="bool" value="false" />
-            <param name="range_min" type="double" value="0.05" />
-            <param name="range_max" type="double" value="25.0" />
+            <param name="range_min" type="double" value="$(optenv LASER2_MIN_RANGE 0.05)" />
+            <param name="range_max" type="double" value="$(optenv LASER2_MAX_RANGE 20.0)" />
             <param name="hostname" type="string" value="$(optenv SEGWAY_LASER2_IP 10.66.171.9)" />
             <param name="port" type="string" value="$(optenv SEGWAY_LASER2_PORT 2112)" />
             <param name="timelimit" type="int" value="5" />

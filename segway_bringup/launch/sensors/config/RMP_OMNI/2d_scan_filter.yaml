@@ -10,7 +10,7 @@ scan_filter_chain:
   name: range
   params: 
     lower_threshold: 0.05
-    upper_threshold: 25.0 
+    upper_threshold: 20.0 
 - type: laser_filters/LaserScanIntensityFilter
   name: intensity
   params: 
