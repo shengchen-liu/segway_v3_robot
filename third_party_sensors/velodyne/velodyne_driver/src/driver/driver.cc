@@ -88,6 +88,9 @@ VelodyneDriver::VelodyneDriver(ros::NodeHandle node,
     CallbackType f;
   f = boost::bind (&VelodyneDriver::callback, this, _1, _2);
   srv_->setCallback (f); // Set callback function und call initially
+  
+  
+  private_nh.param("time_offset", config_.time_offset, 0.0);
 
   // initialize diagnostics
   diagnostics_.setHardwareID(deviceName);

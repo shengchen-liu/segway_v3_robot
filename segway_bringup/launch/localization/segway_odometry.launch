@@ -11,7 +11,7 @@
         <remap from="/imu/data" to="/segway/feedback/ext_imu" if="$(optenv SEGWAY_HAS_EXT_IMU false)"/>
         <remap from="/odometry/filtered" to="/segway/odometry/local_filtered" if="$(optenv SEGWAY_USE_GPS_FOR_LOCAL_ODOM false)" />
         <remap from="/odometry/filtered" to="/segway/odometry/global_filtered" if="$(optenv SEGWAY_USE_GPS_FOR_GLOBAL_LOCALIZATION false)" />
-        <remap from="/gps/fix" to="/segway/feedback/gps/fix_2d" if="$(env SEGWAY_HAS_GPS)"/>
+        <remap from="/gps/fix" to="/segway/feedback/gps/fix" if="$(env SEGWAY_HAS_GPS)"/>
         <remap from="/odometry/gps" to="/segway/odometry/gps"/>
     </node>
     
