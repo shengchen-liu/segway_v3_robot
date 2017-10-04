@@ -43,7 +43,7 @@ if [[ ! -d $log_path ]]; then
   trap 'CREATED_LOGDIR=false' ERR
     log warn "@(name): The log directory you specified \"$log_path\" does not exist. Attempting to create."
     mkdir -p $log_path 2>/dev/null
-    chown {user}:{user} $log_path 2>/dev/null
+    chown @(user):@(user) $log_path 2>/dev/null
     chmod ug+wr $log_path 2>/dev/null
   trap - ERR
   # if log_path could not be created, default to tmp
@@ -68,8 +68,10 @@ export ROS_MASTER_URI=@(master_uri)
 @[else]@
 export ROS_MASTER_URI=http://127.0.0.1:11311
 @[end if]@
+export ROS_HOME=${ROS_HOME:=$(echo ~@(user))/.ros}
+export ROS_LOG_DIR=$log_path
 
-log info "@(name): Launching ROS_HOSTNAME=$ROS_HOSTNAME, ROS_IP=$ROS_IP, ROS_MASTER_URI=$ROS_MASTER_URI, ROS_LOG_DIR=$log_path"
+log info "@(name): Launching ROS_HOSTNAME=$ROS_HOSTNAME, ROS_IP=$ROS_IP, ROS_MASTER_URI=$ROS_MASTER_URI, ROS_HOME=$ROS_HOME, ROS_LOG_DIR=$log_path"
 
 # Assemble amalgamated launchfile.
 LAUNCH_FILENAME=$log_path/@(name).launch
@@ -159,8 +161,6 @@ echo "Delaying upstart for 10 seconds.................."
 sleep 10
 
 # Punch it.
-export ROS_HOME=$(echo ~@(user))/.ros
-export ROS_LOG_DIR=$log_path
 setuidgid @(user) roslaunch $LAUNCH_FILENAME @(roslaunch_wait?'--wait ')&
 PID=$!
 

@@ -91,6 +91,10 @@ class Job(object):
         # upstart conf file.
         self.generate_system_files = True
 
+        # Override this to True if you want to create symbolic link for
+        # job launch files instead of copying them.
+        self.symlink = False
+
         # Override this to True is you want the --wait flag passed to roslaunch.
         # This will be desired if the nodes spawned by this job are intended to
         # connect to an existing master.
@@ -121,7 +125,7 @@ class Job(object):
         if package:
             search_paths = reversed(find_in_workspaces(project=package))
         else:
-            search_paths = ('.',)
+            search_paths = ('.', )
 
         if glob and filename:
             raise RuntimeError("You must specify only an exact filename or a glob, not both.")
@@ -137,7 +141,7 @@ class Job(object):
             for path in search_paths:
                 self.files.extend(glob_files(os.path.join(path, glob)))
 
-    def install(self, root="/", sudo="/usr/bin/sudo", Provider=providers.Upstart):
+    def install(self, root="/", sudo="/usr/bin/sudo", Provider=None):
         """ Install the job definition to the system.
 
         :param root: Override the root to install to, useful for testing.
@@ -152,6 +156,8 @@ class Job(object):
         # This is a recipe of files and their contents which is pickled up and
         # passed to a sudo process so that it can create the actual files,
         # without needing a ROS workspace or any other environmental setup.
+        if Provider is None:
+            Provider = providers.detect_provider()
         p = Provider(root, self)
         installation_files = p.generate_install()
 
@@ -160,8 +166,9 @@ class Job(object):
             print "  %s" % filename
 
         self._call_mutate(sudo, installation_files)
+        p.post_install()
 
-    def uninstall(self, root="/", sudo="/usr/bin/sudo", Provider=providers.Upstart):
+    def uninstall(self, root="/", sudo="/usr/bin/sudo", Provider=None):
         """ Uninstall the job definition from the system.
 
         :param root: Override the root to uninstall from, useful for testing.
@@ -173,7 +180,8 @@ class Job(object):
             file preparation.
         :type provider: Provider
         """
-
+        if Provider is None:
+            Provider = providers.detect_provider()
         p = Provider(root, self)
         installation_files = p.generate_uninstall()
 
