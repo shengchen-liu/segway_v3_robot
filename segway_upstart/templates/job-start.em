@@ -89,7 +89,6 @@ if [ "$?" != "0" ]; then
   exit 1
 fi
 
-
 temp=1
 cnts=0
 while [ $cnts -lt 10 ] && [ $temp -ne 0 ]; do
@@ -156,9 +155,8 @@ if [ $SEGWAY_HAS_SECOND_2D_LASER == true ]; then
   fi
 fi
 
-echo "Delaying upstart for 10 seconds.................."
-
 sleep 10
+echo "Delaying 10 seconds...."
 
 # Punch it.
 setuidgid @(user) roslaunch $LAUNCH_FILENAME @(roslaunch_wait?'--wait ')&
