@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 2.8.3)
 project(velodyne_pointcloud)
 
@@ -45,7 +46,6 @@ include_directories(include ${catkin_INCLUDE_DIRS}
 
 catkin_package(
     CATKIN_DEPENDS ${${PROJECT_NAME}_CATKIN_DEPS}
-    DEPENDS yaml-cpp python-yaml
     INCLUDE_DIRS include
     LIBRARIES velodyne_rawdata)
     
