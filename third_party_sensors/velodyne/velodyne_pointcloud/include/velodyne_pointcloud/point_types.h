@@ -43,4 +43,3 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(velodyne_pointcloud::PointXYZIR,
                                   (uint16_t, ring, ring))
 
 #endif // __VELODYNE_POINTCLOUD_POINT_TYPES_H
-

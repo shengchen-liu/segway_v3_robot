@@ -54,7 +54,5 @@ private:
 
 
 // Register this plugin with pluginlib. Names must match nodelets.xml.
-PLUGINLIB_DECLARE_CLASS(but_velodyne_proc,
-                        GroundMapNodelet,
-                        but_velodyne_proc::GroundMapNodelet,
-                        nodelet::Nodelet);
+PLUGINLIB_EXPORT_CLASS( but_velodyne_proc::GroundMapNodelet,
+                        nodelet::Nodelet)

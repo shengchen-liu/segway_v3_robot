@@ -6,5 +6,5 @@
 #include "filters/filter_base.h"
 #include "pluginlib/class_list_macros.h"
 
-PLUGINLIB_DECLARE_CLASS(range_sensor_filters, LaserScanFootprintFilter, range_sensor_filters::LaserScanFootprintFilter, filters::FilterBase<sensor_msgs::LaserScan>)
-PLUGINLIB_DECLARE_CLASS(range_sensor_filters, PointCloudFootprintFilter, range_sensor_filters::PointCloudFootprintFilter, filters::FilterBase<sensor_msgs::PointCloud2>)
+PLUGINLIB_EXPORT_CLASS(range_sensor_filters::LaserScanFootprintFilter, filters::FilterBase<sensor_msgs::LaserScan>)
+PLUGINLIB_EXPORT_CLASS(range_sensor_filters::PointCloudFootprintFilter, filters::FilterBase<sensor_msgs::PointCloud2>)
